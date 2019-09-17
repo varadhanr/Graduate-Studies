@@ -1,0 +1,32 @@
+#include <stdio.h>
+int main(int argc, char* argv[])
+{
+	int i;
+	FILE *f;
+
+	for (i = 2; i < 2+atoi(argv[1]); i++){
+		if
+		int pid = fork();
+		
+//		printf("parent\n"); 
+//        	printf("%d \n", pid); 
+        	printf(" my id is %d \n", getpid()); 
+//        	printf(" my parentid is %d \n", getppid());
+		
+		f = fopen(argv[i], "r");
+		if(f == NULL)
+		{
+			printf("No file");
+		}
+		else{
+			char c = fgetc(f);
+			while(c != EOF){
+				printf("%c", c);
+				c = fgetc(f);
+			}
+		}
+		//printf("argv[%d]: %s\n", i, argv[i]);
+	}
+
+	
+}
