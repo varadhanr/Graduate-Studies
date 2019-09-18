@@ -1,5 +1,5 @@
 
-File Name : file1.txt, Process ID : 34729
+File Name : file1.txt, Process ID : 16726
 Character :a , count: 5 
 Character :b , count: 3 
 Character :c , count: 0 
@@ -27,7 +27,7 @@ Character :x , count: 0
 Character :y , count: 2 
 Character :z , count: 0 
 
-File Name : file2.txt, Process ID : 34730
+File Name : file2.txt, Process ID : 16727
 Character :a , count: 20 
 Character :b , count: 7 
 Character :c , count: 8 
@@ -55,7 +55,7 @@ Character :x , count: 1
 Character :y , count: 4 
 Character :z , count: 0 
 
-File Name : file3.pdf, Process ID : 34731
+File Name : file3.pdf, Process ID : 16728
 Character :a , count: 12 
 Character :b , count: 1 
 Character :c , count: 11 
@@ -83,7 +83,7 @@ Character :x , count: 0
 Character :y , count: 5 
 Character :z , count: 0 
 
-File Name : file4.docx, Process ID : 34732
+File Name : file4.docx, Process ID : 16729
 Character :a , count: 18 
 Character :b , count: 2 
 Character :c , count: 12 
@@ -111,7 +111,7 @@ Character :x , count: 4
 Character :y , count: 1 
 Character :z , count: 0 
 
-File Name : file5.xml, Process ID : 34733
+File Name : file5.xml, Process ID : 16730
 Character :a , count: 3 
 Character :b , count: 2 
 Character :c , count: 0 
@@ -139,35 +139,7 @@ Character :x , count: 0
 Character :y , count: 2 
 Character :z , count: 0 
 
-File Name : file6.html, Process ID : 34734
-Character :a , count: 4 
-Character :b , count: 2 
-Character :c , count: 2 
-Character :d , count: 4 
-Character :e , count: 2 
-Character :f , count: 2 
-Character :g , count: 2 
-Character :h , count: 7 
-Character :i , count: 3 
-Character :j , count: 0 
-Character :k , count: 0 
-Character :l , count: 3 
-Character :m , count: 5 
-Character :n , count: 1 
-Character :o , count: 3 
-Character :p , count: 5 
-Character :q , count: 0 
-Character :r , count: 4 
-Character :s , count: 2 
-Character :t , count: 6 
-Character :u , count: 0 
-Character :v , count: 0 
-Character :w , count: 0 
-Character :x , count: 0 
-Character :y , count: 5 
-Character :z , count: 0 
-
-File Name : file7.txt, Process ID : 34735
+File Name : file7.txt, Process ID : 16732
 Character :a , count: 1397 
 Character :b , count: 222 
 Character :c , count: 652 
@@ -194,3 +166,31 @@ Character :w , count: 287
 Character :x , count: 132 
 Character :y , count: 168 
 Character :z , count: 25 
+
+File Name : file6.html, Process ID : 16731
+Character :a , count: 4 
+Character :b , count: 2 
+Character :c , count: 2 
+Character :d , count: 4 
+Character :e , count: 2 
+Character :f , count: 2 
+Character :g , count: 2 
+Character :h , count: 7 
+Character :i , count: 3 
+Character :j , count: 0 
+Character :k , count: 0 
+Character :l , count: 3 
+Character :m , count: 5 
+Character :n , count: 1 
+Character :o , count: 3 
+Character :p , count: 5 
+Character :q , count: 0 
+Character :r , count: 4 
+Character :s , count: 2 
+Character :t , count: 6 
+Character :u , count: 0 
+Character :v , count: 0 
+Character :w , count: 0 
+Character :x , count: 0 
+Character :y , count: 5 
+Character :z , count: 0 

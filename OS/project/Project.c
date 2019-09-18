@@ -45,7 +45,7 @@ argv[argc-1] is the ouput/result filename where result needs to be written*/
 
 	//Initialize Semaphore
 	//mutex will store the address of the semaphore
-	mutex = sem_open("programmingsemaphore",O_CREAT,0644,1);
+	mutex = sem_open("sharedsemaphore",O_CREAT,0644,1);
 	
 	//Validating Command Line Argument
 	if(!validateCommandLineArguments(argc,argv)){
@@ -97,6 +97,9 @@ void executeChildProcess(char fileToBeRead[], char fileToBeWritten[]){
 	fread = fopen(fileToBeRead,"r");
 	if(fread == NULL){
  		printf("Error while opening the file %s, Please check whether the file exist\n",fileToBeRead);
+		sem_post(mutex);
+		fclose(fread);
+		fclose(fwrite);
 		return;
 	}	
 
@@ -125,6 +128,9 @@ void executeChildProcess(char fileToBeRead[], char fileToBeWritten[]){
 	fwrite = fopen(fileToBeWritten,"a");
 	if(fwrite == NULL){
 		printf("Error while opening the result file\n");
+		sem_post(mutex);
+		fclose(fread);
+		fclose(fwrite);
 		return;
 	}
 
