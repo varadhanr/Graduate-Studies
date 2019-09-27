@@ -85,6 +85,9 @@ void invokeProcesses(int argc,char ** argv){
 
 void executeChildProcess(char fileToBeRead[], char fileToBeWritten[]){
 
+	// wait on semaphore
+	sem_wait(mutex);
+
 	FILE *fread;
 	FILE *fwrite;
 	char ch;int i;
@@ -121,10 +124,6 @@ void executeChildProcess(char fileToBeRead[], char fileToBeWritten[]){
 	
 	}
 	
-	// wait on semaphore
-	
-	sem_wait(mutex);
-
 	//open file that needs to be written
 	fwrite = fopen(fileToBeWritten,"a");
 	if(fwrite == NULL){
