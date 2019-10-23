@@ -4,10 +4,15 @@
  *
  * Project 2
  * ---------------
+ * FileName : prog1.cc
  *
- * Submission by Varadhan Ramamoorthy (vrr180003@utdallas.edu)
+ * Submission by Varadhan Ramamoorthy (vrr180003) and Humayoon Akthar Qaimkhani (hxq190001)
+ *
+ * Class : Operating System Concepts OS 5348.001
+ * 
  * Naive Large Number Multiplication
- *
+ * 
+ * g++ prog1.cc -o WithoutMultiThreading.out -mcmodel=medium
  *
  */
 
@@ -23,9 +28,10 @@
 #include<ctype.h>
 #include <iostream>
 #include <cstring>
-using namespace std;
-//Driver main function
 
+using namespace std;
+
+//Function declarations
 void populateNumberArrayFromTxtFile();
 
 void computeMultiplicationAndWriteToFile();
@@ -34,30 +40,48 @@ void writeResultArrayToFile();
 
 void populateSingleDigitMulTable();
 
-#define MAXDIGITS 1000000
-unsigned short  ** result;
-unsigned short toAdd[2 * MAXDIGITS];
-unsigned short num1[MAXDIGITS];
-unsigned short num2[MAXDIGITS];
-int numSize1;
-int numSize2;
-unsigned short singleDigitMulTable[10][10];
-main(){
+#define MAXDIGITS 100000
 
+
+unsigned short  result[MAXDIGITS][2*MAXDIGITS];
+
+unsigned short toAdd[2 * MAXDIGITS];
+
+unsigned short num1[MAXDIGITS];
+
+unsigned short num2[MAXDIGITS];
+
+int numSize1;
+
+int numSize2;
+
+//Table for multiplication of two single digit
+unsigned short singleDigitMulTable[10][10];
+
+//Driver main function
+main() {
+
+//Populate Single Digit Multiplication Table
 populateSingleDigitMulTable();
+
+//Read the Files a.txt and b.txt
 populateNumberArrayFromTxtFile();
-result = (unsigned short **)malloc(numSize2 * sizeof(unsigned short *));
-for(int i=0;i<numSize2;i++)
-	result[i] = (unsigned short *)malloc((numSize1+numSize2) * sizeof(unsigned short));
+
+//Dynamic Allocation of 2D array to store Multiplication
+//result = (unsigned short **)malloc(MAXDIGITS * sizeof(unsigned short *));
+//for(int i=0;i<MAXDIGITS;i++)
+//	result[i] = (unsigned short *)malloc((2*MAXDIGITS) * sizeof(unsigned short));
+
 //Computed the Multiplication of A and B and writes it to a file
 computeMultiplicationAndWriteToFile();
 
-free(result);
-return 0;
+//free(result);
 
+return 0;
 
 }
 
+//Function Definition to Populcate Single Digit Multiplication table
 void populateSingleDigitMulTable(){
 
 for(int i=0;i<10;i++){
@@ -71,13 +95,14 @@ for(int i=0;i<10;i++){
 
 }
 
-//function to Compute Multiplication
+//Function to Compute Multiplication and Write it to File c.txt
 void computeMultiplicationAndWriteToFile(){
 
 int i,j,l = 0;
 
 for(i = numSize2 - 1;i>=0 ; i--){
 
+	
 	int carry = 0;
 
 	for(j = numSize1 -1; j>=0; j--){
@@ -114,6 +139,7 @@ for(j=(numSize1 + numSize2 - 1);j>=0;j--){
 	carry = addition /10;
 }
 
+//Write to the File c.txt
 writeResultArrayToFile();
 
 }
@@ -135,7 +161,7 @@ void writeResultArrayToFile(){
 }
 
 
-// function that populates the array with number read from fileToBeRead 
+// Function that populates the array with number read from fileToBeRead 
 
 void populateNumberArrayFromTxtFile(){
 

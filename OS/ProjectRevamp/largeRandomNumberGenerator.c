@@ -1,3 +1,16 @@
+/*
+ *
+ * Program to generate file a.txt and b.txt with specified number of digits 
+ * 
+ * Change maxDigits variable
+ * 
+ * gcc largeRandomNumberGenerator -o LargeNumberGenerator
+ *
+ *
+ */
+
+
+
 #include<stdio.h>
 #include<stdlib.h>
 
@@ -13,7 +26,7 @@ int i;
 int randomInteger;
 int maxDigits;
 
-maxDigits = 1000000;
+maxDigits = 100000;
 
 srand(time(NULL));
 

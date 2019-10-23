@@ -4,10 +4,15 @@
  *
  * Project 2
  * ---------------
+ * FileName : prog2.cc
  *
- * Submission by Varadhan Ramamoorthy (vrr180003@utdallas.edu)
- * Naive Large Number Multiplication
+ * Submission by Varadhan Ramamoorthy (vrr180003) and Humayoon Akhtar Qaimkhani (hxq190001)
  *
+ * Class : Operating System Concepts OS 5348.001
+ *
+ * Naive Large Number Multiplication using Multi Threading
+ *
+ * g++ prog2.cc -pthread -o WithMultiThreading.out -mcmodel=medium
  *
  */
 
@@ -25,8 +30,8 @@
 #include <iostream>
 #include <cstring>
 using namespace std;
-//Driver main function
 
+//Function Definitions
 void populateNumberArrayFromTxtFile();
 
 void * computeMultiplicationAndWriteToFile(void * args);
@@ -41,9 +46,9 @@ void AddCarryToAddArray();
 
 void populateSingleDigitMulTable();
 
-#define MAXDIGITS 1000000
-unsigned short ** result;
-unsigned short toAdd[2 * MAXDIGITS];
+#define MAXDIGITS 100000
+unsigned short  result[MAXDIGITS][2*MAXDIGITS];
+unsigned short toAdd[2*MAXDIGITS];
 unsigned short toCarryForAdd[2 * MAXDIGITS];
 unsigned short num1[MAXDIGITS];
 unsigned short num2[MAXDIGITS];
@@ -56,13 +61,13 @@ int stepsForAdding;
 sem_t mutex;
 
 main(){
+
+//Populate Single Digit Mul Table for lookup
 populateSingleDigitMulTable();
-//result = (unsigned short **)malloc(numSize2 * sizeof(unsigned short *));
-//for(int i=0;i<numSize2;i++)
-//	result[i]=(unsigned short *)malloc((numSize1+numSize2)* sizeof(unsigned short));
 
 sem_init(&mutex,0,1);
 
+//Get number of threads from user
 cout<<"Enter number of threads for Multiplication"<<endl;
 cin>>no_threads;
 
@@ -71,15 +76,23 @@ if(no_threads <=0){
 	cout<<"Defaulting number of threads to 2"<<endl;
 }
 
+//Array of thread identifiers
 pthread_t tid[no_threads];
+
 stepsForMultiThreading = no_threads + 1;
 stepsForAdding = no_threads + 1;
 
+//Read a.txt and b.txt to populate data structures
 populateNumberArrayFromTxtFile();
-result = (unsigned short **) malloc(numSize2 * sizeof(unsigned short *));
-for(int i=0;i<numSize2;i++)
-	result[i] = (unsigned short *) malloc ((numSize1+numSize2) * sizeof(unsigned short));
-//initializeArrays();
+
+//Dynamic Allocation for the 2D array
+//result = (unsigned short **) malloc(MAXDIGITS * sizeof(unsigned short *));
+//for(int i=0;i<MAXDIGITS;i++)
+//	result[i] = (unsigned short *) malloc ((2*MAXDIGITS) * sizeof(unsigned short));
+
+//memset(result,0,sizeof(result[0][0]) * (MAXDIGITS)*(2*MAXDIGITS));
+
+//toAdd = malloc(sizeof(unsigned short) * (2*MAXDIGITS));
 
 for(int t=0;t<no_threads;t++)
 	pthread_create(&tid[t],NULL,computeMultiplicationAndWriteToFile,(void *) t);
@@ -93,16 +106,20 @@ for(int c=0;c<no_threads;c++)
 for(int z=0;z<no_threads;z++)
 	pthread_join(tid[z],NULL);
 
+//Cascade the carry
 AddCarryToAddArray();
 
+//Write result to file c.txt
 writeResultArrayToFile();
 
-free(result);
+//free(result);
+
 return 0;
 
 
 }
 
+//Function to populate Single Digit Mul table for lookup
 void populateSingleDigitMulTable(){
 
 for(int i=0;i<10;i++){
@@ -116,10 +133,11 @@ for(int i=0;i<10;i++){
 
 }
 
+//Cascading Carry 
 void AddCarryToAddArray(){
 int carry = 0;
 for(int i= (numSize1 + numSize2 -1);i>=0;i--){
-	//cout<<i<<endl;
+	
 	int sum = toAdd[i]+ carry;
 	toAdd[i] = sum % 10;
 	carry = toCarryForAdd[i] + (sum / 10);
@@ -129,31 +147,22 @@ for(int i= (numSize1 + numSize2 -1);i>=0;i--){
 }
 
 
-void initializeArrays(){
-
-	for(int l=0;l<numSize2;l++)
-		for(int k=0;k<numSize1+numSize2;k++)
-			result[l][k]=0;
-
-	for(int x=0;x<numSize1+numSize2;x++)
-		toAdd[x] = 0;
-}
-
 //function to Compute Multiplication
 void * computeMultiplicationAndWriteToFile(void * args){
 
 
 double jobPerThread = ceil(((double)numSize2)/no_threads);
-//cout<<jobPerThread<<endl;
+
+//stepsForMultiThreading tells us which part need to be picked up by a single thread , we need semaphore to protect it
 sem_wait(&mutex);
 int threadObservor = --stepsForMultiThreading;
 sem_post(&mutex);
 
-//cout<<threadObservor<<endl;
+
 int i,j,l = 0;
 
 for(i = (threadObservor * jobPerThread) - 1;i>= (threadObservor - 1) * jobPerThread && i>=0 ; i--){
-	//cout<<i<<endl;
+	
 	
 	if(i>=numSize2){
 
@@ -181,10 +190,11 @@ for(i = (threadObservor * jobPerThread) - 1;i>= (threadObservor - 1) * jobPerThr
 
 }
 
-
+//Function to Convert the 2D array to 1D array
 void * addTheColumnsOfResultArray(void * args){
 
 double jobPerThread = ceil((double(numSize1+numSize2))/no_threads);
+
 sem_wait(&mutex);
 int threadObservor = --stepsForAdding;
 sem_post(&mutex);
@@ -193,7 +203,7 @@ int carry = 0;
 int i,j;
 for(j= (threadObservor * jobPerThread) - 1;j>= (threadObservor - 1) * jobPerThread && j>=0;j--){
 	
-	//cout<<j<<endl;
+
 	if(j >= (numSize1+numSize2)){
 		continue;
 
@@ -212,7 +222,7 @@ for(j= (threadObservor * jobPerThread) - 1;j>= (threadObservor - 1) * jobPerThre
 }
 
 
-
+//Function to Write the result to c.txt
 void writeResultArrayToFile(){
 
 	FILE *fwrite;
